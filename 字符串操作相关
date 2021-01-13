@@ -1,0 +1,52 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <Windows.h>
+int main(void)
+{  
+	char str[100] = { 0 };    //这个类型是char[] 一个字符数组类型
+	gets(str);                //从键盘获取,scanf和gets 是不安全的字符串数组获取方式 容易缓冲区溢出  char *gets(char *s) 参数,表示用来存储字符串的空间地址
+	fgets(str, 100, stdin);   // char *fgets(char *s, int size, FILE *stream); 第一个参数表示用来存储字符串的空间地址 参2：描述空间的大小 
+							              // 参3：读取字符串的位置。 默认或标准输入是：stdin ---- fgets会预留\0的存储空间保证不会越界 空间足够会自动加\n
+	puts(str);                //等价于 printf("%s \n",str);puts输出字符串后会自动添加\n puts返回的是一个整数,成功是0，失败是-1  多用于输出到屏幕
+	fputs(str, 100, stdout);  //对应fgets，第三个参数的 标准输出是:stdout  返回值也是成功0 失败 -1 但是fputs不会自动加\n 多用于写入文件
+	
+	system("pause");
+	return EXIT_SUCCESS;
+}
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <Windows.h>
+int main003(void)
+{
+	char str[] = { 0 };
+	printf("Please input charaters\n");
+	
+	scanf("%s", str);                             //scanf 遇到 空格 或者 \n 会结束   ---可以通过正则表达式获取例如 scanf("%[^\n]s", str) ^代表除了...之外的
+	
+	int str1[26] = { 0 };  //代表26个字符
+
+	int length = strlen(str);                     //strlen 来遍历字符串 遇到\0会自动结束（字符串末尾有\0
+	for (size_t i = 0; i < length; i++)
+	{
+		int index = str[i] - 'a';
+		str1[index]++;
+	}
+	for (size_t i = 0; i < 26; i++)
+	{
+		if (str1[i] != 0)
+		{
+			printf("您输入的字符串中%c出现了%d次\n", i+ 'a', str1[i]);
+		}
+	}
+
+	system("pause");
+	return EXIT_SUCCESS;
+}
