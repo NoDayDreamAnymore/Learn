@@ -1,0 +1,93 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <Windows.h>
+int main0701(void)
+{
+	int a = 10;
+	int* p = &a;             // 指针类型影响的是向后读取地址读多少个字节，char1 个字节，int 4个字节，short 2个字节
+	
+	printf("%p\n", p);       // 007BFD94
+	printf("%p\n", p + 1);    //007BFD98 向后加了4个字节， p+1受指针类型的影响，例如char向后+1 ，short向后+2 int 向后+4 
+	system("pause");
+	return EXIT_SUCCESS;
+}
+----------------------------------------------------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <Windows.h>
+int main0801(void)
+{
+	int str[] = { 0, 3, 5, 4, 4, 5, 6 };    //数组名是个常量
+	int* p = str;
+	int length = sizeof(str) / sizeof(str[0]);
+
+	for (size_t i = 0; i < length; i++)
+	{
+		printf("%d\n", *p);
+		printf("%d\n", *(p+1));  // 这种方法*(p+1)不改变指针p的地址  
+		
+		printf("%p\n", p);   //因为是int* 类型所以+4
+		p++;					// 改变指针p的地址,运行结束后p会变成野指针
+	}
+	
+	system("pause");
+	return EXIT_SUCCESS;
+}
+-------------------------------------------------------------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <Windows.h>
+
+//万能指针/泛值指针
+int main0501(void)
+{
+	void* p;                        //万能指针，指针大小32位为4字节，64位为8字节，大小与类型无关，只与使用平台架构有关   
+	system("pause");
+	return EXIT_SUCCESS;
+}
+
+//野指针1（指针没有初始化，给了一个随机的地址）
+//int main0502(void)
+//{
+//	int* p;
+//	*p = 2000;
+//	printf("*p = %d\n", *p);
+//	system("pause");
+//	return EXIT_SUCCESS;
+//}
+//野指针2（变量初始化的地址没有权限访问） 
+int main0503(void)
+{
+	int* p = 10;       // 0-255 确定留给操作系统
+	*p = 2000;
+	printf("*p = %d\n", *p);
+	system("pause");
+	return EXIT_SUCCESS;
+}
+//空指针
+int main0504(void)
+{
+	int* p = NULL; //NULL == 0      此时p所对应的存储空间一定是一个无效的访问区域
+
+	//........
+	//.........
+	if (p != NULL)
+	{
+		*p = 300;
+		printf("*p = %d\n", *p);
+	}
+	system("pause");
+	return EXIT_SUCCESS;
+}
