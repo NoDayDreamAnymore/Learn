@@ -1,0 +1,56 @@
+栈帧：当函数调用时，系统会在stack空间上申请一块内存区域，用来供函数调用，主要存放形参和局部变量（定义在函数内部）。---当函数调用结束，这块内存区域自动被释放
+传值和传地：  
+传值：函数调用期间，实参复制一份给形参。
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <Windows.h>
+int main(void)
+{
+	int a = 3;
+	int b = 5;
+	swap(a, b);
+	printf("a= %d, b = %d\n", a, b);
+	system("pause");
+	return EXIT_SUCCESS;
+}
+
+int swap(int a, int b)
+{
+	int tmp = 0;
+	tmp = a;
+	a = b;
+	b = tmp;
+
+	return 0;
+}
+传址：函数调用期间，实参将地址值，拷贝一份给形参  我的理解是 主函数将实参的地址赋值给形参以后，相当于形参对主函数实参地址指向的内容做相应的修改。而传值是形参有了一个新的地址对他的地址指向的
+     内容做相应的修改，但是函数调用结束后，内存释放，主函数还是要访问实参的地址指向的内容。
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <Windows.h>
+int swap2(int* a, int* b);
+int main(void)
+{
+	int a = 3;
+	int b = 5;
+	swap2(&a, &b);
+	printf("a= %d, b = %d\n", a, b);
+	system("pause");
+	return EXIT_SUCCESS;
+}
+int swap2(int* a, int* b)
+{
+	int tmp = 0;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+	return 0;
+}             
