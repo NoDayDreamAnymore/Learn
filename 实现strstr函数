@@ -1,0 +1,49 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <Windows.h>
+
+int my_strstr(char* str, char* deststr)
+{
+	char* pstr = str;				
+	char* temp = str;
+	char* pdeststr = deststr;
+
+	while (*pstr)
+	{
+		temp = pstr;
+
+		while (*pstr == *pdeststr && *pstr != '\0')
+		{
+			pstr++;
+			pdeststr++;
+		}
+		if( *pdeststr == '\0')
+		{
+			return temp;
+		}
+
+		pstr = temp;
+		pdeststr = deststr;
+		pstr++;
+		
+	}
+	return NULL;
+}
+
+int main(void)
+{
+	char* str = "llehelloword";
+	char* deststr = "hello";
+	
+	char* temp;
+	temp = my_strstr(str, deststr);
+	printf("%s\n", temp);
+	printf("%s\n", my_strstr(str, deststr));
+   
+	system("pause");
+	return EXIT_SUCCESS;
+}
