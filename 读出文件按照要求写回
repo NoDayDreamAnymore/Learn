@@ -1,0 +1,88 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+#include <Windows.h>
+void write_file()
+{
+	FILE* fp = fopen("test2.txt", "w");
+	if (fp == NULL)
+	{
+		perror("fopen error:");
+	}
+	fputs("10/2=\n", fp);
+	fputs("10-2=\n", fp);
+	fputs("10+2=\n", fp);
+	fputs("10*2=\n", fp);
+	
+	fclose(fp);
+}
+
+void read_file()
+{
+	int a, b;
+	char ch;
+	char buf[4096] = {0};
+	int ret=0;
+	char result[4096] = { 0 };
+	char sum_result[4096] = { 0 };
+	FILE* fp = fopen("test2.txt", "r");
+	if (fp == NULL)
+	{
+		perror("fopen error:");
+	}
+	while (1)
+	{
+		fgets(buf, 4096, fp);
+		if (feof(fp))
+		{
+			break;
+		}
+		sscanf(buf, "%d%c%d=\n", &a, &ch, &b);
+		
+		switch (ch)
+		{
+		case '+':
+			ret = a + b;
+			break;
+		case '-':
+			ret = a - b;
+			break;
+		case '*':
+			ret = a * b;
+			break;
+		case '/':
+			ret = a / b;
+			break;
+		default:
+			break;
+		}
+		sprintf(result, "%d%c%d=%d\n", a, ch, b, ret);
+
+		strcat(sum_result, result);
+	}
+	//printf("%s\n", sum_result);
+	fclose(fp);
+
+	fp = fopen("test2.txt", "w");
+
+	if (fp == NULL)
+	{
+		perror("fopen error:");
+	}
+	
+	fputs(sum_result, fp);
+	fclose(fp);
+}
+
+
+int main(void)
+{
+	write_file();
+	read_file();
+
+	system("pause");
+	return EXIT_SUCCESS;
+}
